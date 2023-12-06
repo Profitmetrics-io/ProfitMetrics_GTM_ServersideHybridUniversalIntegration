@@ -2,5 +2,5 @@ homepage: "https://profitmetrics.io"
 documentation: "https://knowledge.profitmetrics.io/how-to-set-up-serverside-hybrid-universal-integration-through-google-tag-manager"
 versions:
   # Latest version
-  - sha: 7ecfe2f6d4caa9a0b4bd02a6e743d74ad657e86b
+  - sha: 0d0df3a4ce69239dcd7b994ff2b83f6b787c4e3a
     changeNotes: Initial release.
