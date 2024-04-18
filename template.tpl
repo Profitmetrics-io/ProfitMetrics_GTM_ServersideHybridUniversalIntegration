@@ -13,7 +13,7 @@ ___INFO___
   "id": "pmsshui",
   "version": 1,
   "securityGroups": [],
-  "displayName": "ProfitMetrics - Serverside Hybrid Universal Integration",
+  "displayName": "ProfitMetrics - Serverside Hybrid Universal Integration - Script",
   "categories": [
     "ADVERTISING",
     "ANALYTICS",
@@ -69,9 +69,8 @@ ___TEMPLATE_PARAMETERS___
     "displayName": "Customer Email",
     "simpleValueType": true,
     "alwaysInSummary": true,
-    "help": "Insert a variable that contains the user email.",
-    "defaultValue": "{{PM Email}}",
-    "valueHint": "Must be {{PM Email}}"
+    "help": "Insert a variable that contains the user email",
+    "valueHint": "{{Email}}"
   },
   {
     "type": "SELECT",
@@ -102,7 +101,8 @@ ___TEMPLATE_PARAMETERS___
             "type": "EQUALS"
           }
         ],
-        "help": "Insert a custom variable with a boolean value (true/false)"
+        "help": "Insert a custom variable with a boolean value (true/false)",
+        "valueHint": "true/false"
       },
       {
         "type": "TEXT",
@@ -116,10 +116,12 @@ ___TEMPLATE_PARAMETERS___
             "type": "EQUALS"
           }
         ],
-        "help": "Insert a custom variable with a boolean value (true/false)"
+        "help": "Insert a custom variable with a boolean value (true/false)",
+        "valueHint": "true/false"
       }
     ],
-    "alwaysInSummary": false
+    "alwaysInSummary": true,
+    "defaultValue": "googleConsentMode"
   },
   {
     "type": "CHECKBOX",
@@ -158,59 +160,57 @@ if (!data.publicId) {
   return;
 }
 
+
 // Initialize empty profitMetricsConfig object
 const profitMetricsConfig = {};
 
 
+// Now set the PID and other properties
+profitMetricsConfig.pid = data.publicId;
+
 // Handle different consent modes
-if (data.consentType === 'googleConsentMode') {
+if (data.consentType === 'googleConsentMode' || data.consentType === undefined) {
   profitMetricsConfig.cookieStatisticsConsent = analyticsStorageConsent;
   profitMetricsConfig.cookieMarketingConsent = adStorageConsent;
 } else if (data.consentType === 'custom') {
-  profitMetricsConfig.cookieStatisticsConsent = data.consentStatistics === false || data.consentStatistics === "false" ? false : true;
-  profitMetricsConfig.cookieMarketingConsent = data.consentMarketing === false || data.consentMarketing === "false" ? false : true;
+  profitMetricsConfig.cookieStatisticsConsent = typeof data.consentStatistics !== 'undefined' && (data.consentStatistics === false || data.consentStatistics === "false") ? false : true;
+  profitMetricsConfig.cookieMarketingConsent = typeof data.consentMarketing !== 'undefined' && (data.consentMarketing === false || data.consentMarketing === "false") ? false : true;
 } else if (data.consentType === 'disabled') {
-  // Do not include consent properties
+  // Do not include consent properties when consent is disabled
 }
 
-// Set Email Event
-var _pmSetEmail = copyFromWindow('profitMetrics.setEmail');
-if( typeof _pmSetEmail === 'function' ) {
-debugLog("setEmail exists");
-  if (typeof data.email !== 'undefined' && data.email != null ) {  // Explicitly check for undefined and null
-    debugLog('Email is defined.');
-    const setEmailResult = callInWindow('profitMetrics.setEmail', data.email);
-    if (setEmailResult == undefined) {
-      debugLog('setEmail event is fired.');
-    } else {
-      debugLog('setEmail event failed.');
-        data.gtmOnFailure();
-    }
-  } else {
-    debugLog('Email is undefined, setEmail not called.');
-  }
-  data.gtmOnSuccess();
-  return;
-}
 
-// Now set the PID and other properties
-profitMetricsConfig.pid = data.publicId;
-profitMetricsConfig.debugMode = data.debugMode;
 profitMetricsConfig.emailInputSelector = data.className;
+
+
+// Include setEmail in onLoad function only of email exists
+if (typeof data.email === 'string' && data.email.indexOf('@') > -1) {
+profitMetricsConfig.onLoad = function() {
+    var setEmail = copyFromWindow('profitMetrics.setEmail');
+    
+    if (typeof setEmail === 'function') {
+      setEmail(data.email);
+      debugLog('onLoad function sucessfull');
+    } else {
+      debugLog('setEmail function not available');
+    }
+  };
+}
+
 
 // Log when window.profitMetrics is loaded
 debugLog('window.profitMetrics is loaded.');
 // Set the profitMetrics configuration on the global scope
 setInWindow('profitMetrics', profitMetricsConfig);
 
-// Load the external script (bundle.js)
 const scriptURL = 'https://cdn1.profitmetrics.io/' + data.publicId + '/bundle.js';
-
 injectScript(scriptURL, function() {
   debugLog('bundle.js is loaded.');
+  // Script is successfully loaded; you can execute any callback or success function here.
   data.gtmOnSuccess();
 }, function() {
   debugLog('Error: Failed to load the ProfitMetrics script.');
+  // Handle the error, for example by calling a failure callback.
   data.gtmOnFailure();
 });
 
@@ -501,7 +501,7 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "profitMetricsConfig.onLoad"
+                    "string": "dataLayer"
                   },
                   {
                     "type": 8,
@@ -513,7 +513,7 @@ ___WEB_PERMISSIONS___
                   },
                   {
                     "type": 8,
-                    "boolean": true
+                    "boolean": false
                   }
                 ]
               },
@@ -540,7 +540,7 @@ ___WEB_PERMISSIONS___
                 "mapValue": [
                   {
                     "type": 1,
-                    "string": "dataLayer"
+                    "string": "profitMetricsScriptLoaded"
                   },
                   {
                     "type": 8,
