@@ -295,7 +295,7 @@ profitMetricsConfig.onLoad = function() {
     
     if (typeof setEmail === 'function') {
       setEmail(data.email);
-      debugLog('onLoad function sucessfull');
+      debugLog('onLoad function successful');
     } else {
       debugLog('setEmail function not available');
     }
@@ -305,9 +305,9 @@ profitMetricsConfig.onLoad = function() {
     
     if (typeof setHashedEmail === 'function') {
       setHashedEmail(pmEmailMD5, pmEmailSHA256);
-      debugLog('onLoad function sucessfull');
+      debugLog('onLoad function successful');
     } else {
-      debugLog('setEmail function not available');
+      debugLog('setHashedEmail function not available');
     }
   }
 };
