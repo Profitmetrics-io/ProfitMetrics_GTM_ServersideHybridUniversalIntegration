@@ -183,7 +183,7 @@ ___TEMPLATE_PARAMETERS___
         "simpleValueType": true,
         "alwaysInSummary": true,
         "help": "If your website has \"da.example.com\" and \"en.example.com\" you can use \".example.com\" to set the pmStorage cookie on the top-level domain.",
-        "valueHint": ".examle.com"
+        "valueHint": ".example.com"
       },
       {
         "type": "CHECKBOX",
