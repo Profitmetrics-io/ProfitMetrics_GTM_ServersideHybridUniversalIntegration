@@ -283,7 +283,7 @@ profitMetricsConfig.emailInputSelector = pmEmailInputSelector;
 
 // Set Cookiedomain 
 if (pmCookieDomain){
-profitMetricsConfig.cookieDomain = pmCookieDomain.startsWith('.') ? pmCookieDomain : '.' + pmCookieDomain;
+profitMetricsConfig.cookieDomain = pmCookieDomain.indexOf('.') === 0 ? pmCookieDomain : '.' + pmCookieDomain;
 }
 
 
