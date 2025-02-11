@@ -2,9 +2,11 @@ homepage: "https://profitmetrics.io"
 documentation: "https://knowledge.profitmetrics.io/how-to-set-up-serverside-hybrid-universal-integration-through-google-tag-manager"
 versions:
   # Latest version
+  - sha: 68cd8895f541bea12a23b830d652490ee596af3f
+    changeNotes: Added support for Klarna Checkout
+  # Older versions
   - sha: 5fb00d1c93b112b6b86368604ea2eaf216e032c4
     changeNotes: Updated name and logo
-  # Older versions
   - sha: 84ab2e6bf89dce2f0fa708796e86df55110a0187
     changeNotes: Bugfixes and updates
   - sha: 79df7ca782cfe8480e116f4c274bc4157f317d0a
