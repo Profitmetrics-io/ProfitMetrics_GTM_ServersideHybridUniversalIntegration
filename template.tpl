@@ -13,7 +13,7 @@ ___INFO___
   "id": "pmsshui",
   "version": 1,
   "securityGroups": [],
-  "displayName": "PM Serverside Hybrid Universal Integration Script",
+  "displayName": "PM Serverside Hybrid Universal Integration Script*",
   "categories": [
     "ADVERTISING",
     "ANALYTICS",
@@ -190,7 +190,8 @@ ___TEMPLATE_PARAMETERS___
       }
     ],
     "help": "The path of your checkout page. Usually something like /checkout.",
-    "valueHint": "/checkout"
+    "valueHint": "/checkout",
+    "defaultValue": "/checkout"
   },
   {
     "type": "GROUP",
@@ -309,8 +310,8 @@ if(pmEmailInputSelector){
 }
 
 // Set Cookiedomain 
-if (pmCookieDomain){
-  profitMetricsConfig.cookieDomain = pmCookieDomain.startsWith('.') ? pmCookieDomain : '.' + pmCookieDomain;
+if (pmCookieDomain) {
+  profitMetricsConfig.cookieDomain = pmCookieDomain.indexOf('.') === 0 ? pmCookieDomain : '.' + pmCookieDomain;
 }
 
 // Set Klarna Checkout
