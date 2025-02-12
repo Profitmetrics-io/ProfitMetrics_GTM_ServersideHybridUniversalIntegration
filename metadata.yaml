@@ -2,7 +2,7 @@ homepage: "https://profitmetrics.io"
 documentation: "https://knowledge.profitmetrics.io/how-to-set-up-serverside-hybrid-universal-integration-through-google-tag-manager"
 versions:
   # Latest version
-  - sha: 7d48885ec055b3fafa3528f00d39ff3a28c02c40
+  - sha: 378a46ced964adc249674c0eee7c1818b206d50e
     changeNotes: Fixed bug causing tag to fail when cookieDomain was set
   # Older versions
   - sha: 751a46c8c0cdc0084aa1174f85d63f175588311d
