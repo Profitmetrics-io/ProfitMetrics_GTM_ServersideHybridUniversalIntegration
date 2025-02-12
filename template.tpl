@@ -13,7 +13,7 @@ ___INFO___
   "id": "pmsshui",
   "version": 1,
   "securityGroups": [],
-  "displayName": "PM Serverside Hybrid Universal Integration Script*",
+  "displayName": "PM Serverside Hybrid Universal Integration Script",
   "categories": [
     "ADVERTISING",
     "ANALYTICS",
