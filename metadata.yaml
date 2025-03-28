@@ -2,9 +2,12 @@ homepage: "https://profitmetrics.io"
 documentation: "https://knowledge.profitmetrics.io/how-to-set-up-serverside-hybrid-universal-integration-through-google-tag-manager"
 versions:
   # Latest version
+  
+  - sha: e8e78bd28c35a21c5c3204f21e5c558ac7ffa6d4
+    changeNotes: Automatic removal of traiaccidental trailing comma in emailInputSelector
+  # Older versions
   - sha: 378a46ced964adc249674c0eee7c1818b206d50e
     changeNotes: Fixed bug causing tag to fail when cookieDomain was set
-  # Older versions
   - sha: 751a46c8c0cdc0084aa1174f85d63f175588311d
     changeNotes: Added support for Klarna Checkout
   - sha: 5fb00d1c93b112b6b86368604ea2eaf216e032c4
